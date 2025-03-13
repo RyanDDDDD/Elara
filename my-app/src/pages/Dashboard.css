@@ -1,0 +1,308 @@
+.dashboard {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    background-color: #f5f7fa;
+  }
+  
+  /* Sidebar Styles */
+  .dashboard-sidebar {
+    width: 60px;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+  }
+  
+  .dashboard-sidebar-left {
+    border-right: 1px solid #ebedf0;
+  }
+  
+  .dashboard-sidebar-right {
+    border-left: 1px solid #ebedf0;
+  }
+  
+  .sidebar-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #717171;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+  }
+  
+  .sidebar-icon:hover {
+    background-color: #f0f0f0;
+    color: #4caf4f;
+  }
+  
+  /* Main Content Styles */
+  .dashboard-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  /* Header Styles */
+  .dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ebedf0;
+  }
+  
+  .dashboard-logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+  }
+  
+  .logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    color: #263238;
+  }
+  
+  /* Roles Dropdown Styles */
+  .dashboard-roles-dropdown {
+    position: relative;
+  }
+  
+  .roles-dropdown-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: #ffffff;
+    border: 1px solid #ebedf0;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .roles-dropdown-button:hover {
+    background-color: #f5f7fa;
+  }
+  
+  .roles-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #ebedf0;
+    border-radius: 4px;
+    margin-top: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+  
+  .roles-dropdown-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .roles-dropdown-item:hover {
+    background-color: #f5f7fa;
+  }
+  
+  /* Profile Styles */
+  .dashboard-profile {
+    position: relative;
+  }
+  
+  .profile-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #4caf4f;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+  }
+  
+  .profile-button:hover {
+    background-color: #43a046;
+  }
+  
+  .profile-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    background-color: #ffffff;
+    border: 1px solid #ebedf0;
+    border-radius: 4px;
+    margin-top: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+  
+  .profile-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: #263238;
+    text-decoration: none;
+  }
+  
+  .profile-dropdown-item:hover {
+    background-color: #f5f7fa;
+  }
+  
+  /* Content Styles */
+  .dashboard-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px;
+  }
+  
+  .dashboard-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #263238;
+    text-align: center;
+    margin-top: 100px;
+  }
+  
+  /* Chat Input Styles */
+  .dashboard-chat-input {
+    margin-top: auto;
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    max-width: 800px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .chat-input-avatar {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+  
+  .chat-input-form {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    gap: 8px;
+  }
+  
+  .chat-input {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    font-size: 16px;
+    outline: none;
+  }
+  
+  .chat-mic-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    color: #717171;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid #ebedf0;
+    transition: background-color 0.3s;
+  }
+  
+  .chat-mic-button:hover {
+    background-color: #f5f7fa;
+  }
+  
+  .chat-send-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background-color: #4caf4f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .chat-send-button:hover {
+    background-color: #43a046;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .dashboard-sidebar {
+      width: 50px;
+    }
+  
+    .dashboard-header {
+      padding: 15px;
+    }
+  
+    .dashboard-content {
+      padding: 20px;
+    }
+  
+    .dashboard-title {
+      font-size: 28px;
+      margin-top: 60px;
+    }
+  
+    .dashboard-chat-input {
+      padding: 15px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .dashboard-sidebar {
+      width: 40px;
+    }
+  
+    .logo-text {
+      display: none;
+    }
+  
+    .roles-dropdown-button {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+  
+    .dashboard-title {
+      font-size: 24px;
+      margin-top: 40px;
+    }
+  }
+  
