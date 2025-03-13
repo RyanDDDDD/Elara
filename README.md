@@ -1,9 +1,5 @@
 # Elara - Clean Energy Education Platform
 
-<div align="center">
-  <img src="public/elara-logo.svg" alt="Elara Logo" width="120" />
-  <h3>Find your future in energy</h3>
-</div>
 
 ## 📋 Overview
 
