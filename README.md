@@ -18,7 +18,7 @@ Elara is an interactive platform designed to help users understand and explore t
 - **Frontend**: React, React Router
 - **Styling**: CSS
 - **Build Tool**: Vite
-- **Deployment**: [Your deployment platform]
+- **Deployment**: V0
 
 ## 🚀 Getting Started
 
