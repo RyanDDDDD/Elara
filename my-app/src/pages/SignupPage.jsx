@@ -54,31 +54,6 @@ function SignupPage() {
 
           <button className="signup-button">Sign up</button>
         </div>
-
-        <div className="signup-as-section">
-          <h3 className="signup-as-title">Login as</h3>
-          <div className="signup-profiles">
-            <div className="signup-profile">
-              <div className="signup-profile-image">
-                <img src="/帥哥.jpeg" alt="Ryan" className="signup-avatar" />
-              </div>
-              <div className="signup-profile-info">
-                <div className="signup-profile-name">Ryan</div>
-                <div className="signup-profile-status">Active 1 days ago</div>
-              </div>
-            </div>
-
-            <div className="signup-profile">
-              <div className="signup-profile-image">
-                <img src="/吳彥祖.jpeg" alt="Michael" className="signup-avatar" />
-              </div>
-              <div className="signup-profile-info">
-                <div className="signup-profile-name">Michael</div>
-                <div className="signup-profile-status">Active 4 days ago</div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   )

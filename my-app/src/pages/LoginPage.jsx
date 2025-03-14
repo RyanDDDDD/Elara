@@ -133,7 +133,7 @@ function LoginPage() {
           <div className="login-profiles">
             <div className="login-profile" onClick={handleGuestLogin}>
               <div className="login-profile-image">
-                <img src="/placeholder.svg?height=60&width=60" alt="Ryan" className="login-avatar" />
+                <img src="/帥哥.jpeg" alt="Ryan" className="login-avatar" />
               </div>
               <div className="login-profile-info">
                 <div className="login-profile-name">Ryan</div>
@@ -143,7 +143,7 @@ function LoginPage() {
 
             <div className="login-profile" onClick={handleGuestLogin}>
               <div className="login-profile-image">
-                <img src="/placeholder.svg?height=60&width=60" alt="Michael" className="login-avatar" />
+                <img src="/吳彥祖.jpeg" alt="Michael" className="login-avatar" />
               </div>
               <div className="login-profile-info">
                 <div className="login-profile-name">Michael</div>
