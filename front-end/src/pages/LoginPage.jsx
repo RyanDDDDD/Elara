@@ -1,12 +1,78 @@
 "use client"
+
+import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
 import "./LoginPage.css"
 
 function LoginPage() {
-  const navigate = useNavigate()
+  const [identifier, setIdentifier] = useState("")
+  const [password, setPassword] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [successMessage, setSuccessMessage] = useState("")
 
-  const handleGuestLogin = () => {
-    navigate("/dashboard")
+  const navigate = useNavigate()
+  const { login, loginAsGuest, isAuthenticated } = useAuth()
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard")
+    }
+  }, [isAuthenticated, navigate])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    if (!identifier || !password) {
+      setError("Please enter both username/email and password")
+      return
+    }
+
+    setIsLoading(true)
+    setError("")
+
+    try {
+      const result = await login(identifier, password)
+
+      if (result.success) {
+        setSuccessMessage("Login successful! Redirecting...")
+        setTimeout(() => {
+          navigate("/dashboard")
+        }, 1000)
+      } else {
+        setError(result.message)
+      }
+    } catch (err) {
+      setError("An error occurred during login. Please try again.")
+      console.error("Login error:", err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleGuestLogin = async () => {
+    setIsLoading(true)
+    setError("")
+
+    try {
+      const result = await loginAsGuest()
+
+      if (result.success) {
+        setSuccessMessage("Guest login successful! Redirecting...")
+        setTimeout(() => {
+          navigate("/dashboard")
+        }, 1000)
+      } else {
+        setError(result.message)
+      }
+    } catch (err) {
+      setError("An error occurred during guest login. Please try again.")
+      console.error("Guest login error:", err)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -18,26 +84,6 @@ function LoginPage() {
           <p className="login-left-description">
             This is an agent that helps you understand the field of clean energy.
           </p>
-
-          <div className="login-illustration">
-            <svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-              {/* Simplified rocket illustration */}
-              <ellipse cx="150" cy="150" rx="60" ry="30" fill="#ffffff" fillOpacity="0.6" />
-              <ellipse cx="100" cy="100" rx="40" ry="20" fill="#ffffff" fillOpacity="0.6" />
-              <ellipse cx="200" cy="180" rx="30" ry="15" fill="#ffffff" fillOpacity="0.6" />
-
-              {/* Rocket */}
-              <path d="M150 180 L170 240 L130 240 Z" fill="#EB4335" />
-              <ellipse cx="150" cy="180" rx="20" ry="40" fill="#FBBC05" />
-              <rect x="140" y="140" width="20" height="40" fill="#FBBC05" />
-
-              {/* Person */}
-              <circle cx="150" cy="130" r="15" fill="#8D8D8D" />
-              <rect x="140" y="145" width="20" height="30" fill="#4CAF4F" />
-              <rect x="135" y="155" width="10" height="20" fill="#4CAF4F" transform="rotate(-20 135 155)" />
-              <rect x="155" y="155" width="10" height="20" fill="#4CAF4F" transform="rotate(20 155 155)" />
-            </svg>
-          </div>
         </div>
       </div>
 
@@ -55,6 +101,9 @@ function LoginPage() {
         </div>
 
         <h1 className="login-title">Login</h1>
+
+        {error && <div className="login-error-message">{error}</div>}
+        {successMessage && <div className="login-success-message">{successMessage}</div>}
 
         <div className="login-social-buttons">
           <button className="login-social-button login-google">
@@ -100,15 +149,29 @@ function LoginPage() {
           </div>
         </div>
 
-        <div className="login-form">
+        <form className="login-form" onSubmit={handleSubmit}>
           <div className="login-form-group">
             <label className="login-label">Enter your username or email address</label>
-            <input type="text" className="login-input" placeholder="Username or email address" />
+            <input
+              type="text"
+              className="login-input"
+              placeholder="Username or email address"
+              value={identifier}
+              onChange={(e) => setIdentifier(e.target.value)}
+              disabled={isLoading}
+            />
           </div>
 
           <div className="login-form-group">
             <label className="login-label">Enter your Password</label>
-            <input type="password" className="login-input" placeholder="Password" />
+            <input
+              type="password"
+              className="login-input"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={isLoading}
+            />
             <div className="login-forgot-password">
               <a href="#" className="login-forgot-link">
                 Forgot Password
@@ -116,22 +179,28 @@ function LoginPage() {
             </div>
           </div>
 
-          <button className="login-button">Login</button>
+          <button type="submit" className="login-button" disabled={isLoading}>
+            {isLoading ? "Logging in..." : "Login"}
+          </button>
 
           <div className="login-guest-section">
             <div className="login-guest-divider">
               <span>or</span>
             </div>
-            <button className="login-guest-button" onClick={handleGuestLogin}>
+            <button type="button" className="login-guest-button" onClick={handleGuestLogin} disabled={isLoading}>
               Continue as Guest
             </button>
           </div>
-        </div>
+        </form>
 
         <div className="login-as-section">
           <h3 className="login-as-title">Login as</h3>
           <div className="login-profiles">
-            <div className="login-profile" onClick={handleGuestLogin}>
+            <div
+              className="login-profile"
+              onClick={handleGuestLogin}
+              style={{ cursor: isLoading ? "default" : "pointer", opacity: isLoading ? 0.7 : 1 }}
+            >
               <div className="login-profile-image">
                 <img src="/帥哥.jpeg" alt="Ryan" className="login-avatar" />
               </div>
@@ -141,7 +210,11 @@ function LoginPage() {
               </div>
             </div>
 
-            <div className="login-profile" onClick={handleGuestLogin}>
+            <div
+              className="login-profile"
+              onClick={handleGuestLogin}
+              style={{ cursor: isLoading ? "default" : "pointer", opacity: isLoading ? 0.7 : 1 }}
+            >
               <div className="login-profile-image">
                 <img src="/吳彥祖.jpeg" alt="Michael" className="login-avatar" />
               </div>

@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
 import "./Dashboard.css"
 
 function Dashboard() {
@@ -10,6 +11,16 @@ function Dashboard() {
   const [selectedRole, setSelectedRole] = useState("Roles select")
   const [showProfileDropdown, setShowProfileDropdown] = useState(false)
 
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
+
+  // Set the selected role from user data if available
+  useEffect(() => {
+    if (user && user.role) {
+      setSelectedRole(user.role)
+    }
+  }, [user])
+  
   const handleSendMessage = (e) => {
     e.preventDefault()
     // Here you would handle sending the message
@@ -20,6 +31,15 @@ function Dashboard() {
   const selectRole = (role) => {
     setSelectedRole(role)
     setShowRolesDropdown(false)
+  }
+
+  const handleLogout = async () => {
+    try {
+      await logout()
+      navigate("/")
+    } catch (err) {
+      console.error("Logout error:", err)
+    }
   }
 
   return (
@@ -130,7 +150,7 @@ function Dashboard() {
                   </svg>
                   Profile
                 </div>
-                <Link to="/" className="profile-dropdown-item">
+                <div className="profile-dropdown-item" onClick={handleLogout}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -147,7 +167,7 @@ function Dashboard() {
                     <line x1="21" y1="12" x2="9" y2="12"></line>
                   </svg>
                   Logout
-                </Link>
+                </div>
               </div>
             )}
           </div>
