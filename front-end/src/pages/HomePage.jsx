@@ -1,11 +1,25 @@
 "use client"
 import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
 
 function HomePage() {
   const navigate = useNavigate()
+  const { loginAsGuest } = useAuth()
 
-  const handleGetStarted = () => {
-    navigate("dashboard")
+  const handleGetStarted = async () => {
+    try {
+      const result = await loginAsGuest()
+      if (result.success) {
+        navigate("/dashboard")
+      } else {
+        console.error("Guest login failed:", result.message)
+        // 如果访客登录失败，则导航到注册页面
+        navigate("/signup")
+      }
+    } catch (err) {
+      console.error("Error during guest login:", err)
+      navigate("/signup")
+    }
   }
 
   return (

@@ -1,0 +1,28 @@
+{
+    "testuser": {
+        "password": "password123",
+        "email": "test@example.com",
+        "history_ids": [
+            "12345678-1234-5678-1234-567812345678"
+        ],
+        "user_info": {
+            "identity": "undergraduate"
+        }
+    },
+    "apitestuser": {
+        "password": "newapitestpass",
+        "email": "newapitest@example.com",
+        "history_ids": [],
+        "user_info": {
+            "identity": "default"
+        }
+    },
+    "ddddsaado": {
+        "password": "1234567",
+        "email": "123@email.com",
+        "history_ids": [],
+        "user_info": {
+            "identity": "default"
+        }
+    }
+}

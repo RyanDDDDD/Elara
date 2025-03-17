@@ -2,8 +2,7 @@
 
 // 修改 API_BASE_URL 常量，确保它指向正确的后端地址
 // 定义API基础URL - 根据你的Flask应用运行地址调整
-// 如果使用了代理配置，可以将 API_BASE_URL 设置为相对路径
-const API_BASE_URL = "http://127.0.0.1:5000" // 使用相对路径，请求会通过代理转发到后端
+const API_BASE_URL = "http://127.0.0.1:5000" // 修改为你的Flask后端地址
 
 /**
  * 处理API响应
@@ -65,12 +64,19 @@ export const signup = async (userData) => {
 
     const response = await fetch(`${API_BASE_URL}/register`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        // 添加CORS相关头部
+        "Access-Control-Allow-Origin": "*",
+      },
       body: JSON.stringify({
         username: userData.username,
         password: userData.password,
         email: userData.email,
       }),
+      // 添加CORS模式
+      mode: "cors",
+      credentials: "same-origin",
     })
 
     // 尝试解析响应
@@ -110,7 +116,7 @@ export const signup = async (userData) => {
     console.error("Detailed signup error:", error)
     return {
       success: false,
-      message: `Connection error: ${error.message}. Please check if the backend server is running.`,
+      message: `Connection error: ${error.message}. Please check if the backend server is running at ${API_BASE_URL}.`,
     }
   }
 }
@@ -123,13 +129,29 @@ export const signup = async (userData) => {
  */
 export const login = async (identifier, password) => {
   try {
+    console.log("Attempting to connect to:", `${API_BASE_URL}/login`)
+    console.log(
+      "With data:",
+      JSON.stringify({
+        username: identifier,
+        password: password,
+      }),
+    )
+
     const response = await fetch(`${API_BASE_URL}/login`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        // 添加CORS相关头部
+        "Access-Control-Allow-Origin": "*",
+      },
       body: JSON.stringify({
         username: identifier,
         password: password,
       }),
+      // 添加CORS模式
+      mode: "cors",
+      credentials: "same-origin",
     })
 
     // 尝试解析响应
@@ -145,7 +167,14 @@ export const login = async (identifier, password) => {
       // 登录成功，获取用户信息
       const userResponse = await fetch(`${API_BASE_URL}/user/${identifier}`, {
         method: "GET",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          // 添加CORS相关头部
+          "Access-Control-Allow-Origin": "*",
+        },
+        // 添加CORS模式
+        mode: "cors",
+        credentials: "same-origin",
       })
 
       if (userResponse.ok) {
@@ -185,7 +214,7 @@ export const login = async (identifier, password) => {
     console.error("Login error:", error)
     return {
       success: false,
-      message: error.message || "An error occurred during login",
+      message: `Connection error: ${error.message}. Please check if the backend server is running at ${API_BASE_URL}.`,
     }
   }
 }
@@ -237,7 +266,14 @@ export const getUserInfo = async (username) => {
   try {
     const response = await fetch(`${API_BASE_URL}/user/${username}`, {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        // 添加CORS相关头部
+        "Access-Control-Allow-Origin": "*",
+      },
+      // 添加CORS模式
+      mode: "cors",
+      credentials: "same-origin",
     })
 
     if (response.ok) {
@@ -273,11 +309,18 @@ export const updateUserInfo = async (username, userData) => {
   try {
     const response = await fetch(`${API_BASE_URL}/user/${username}`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        // 添加CORS相关头部
+        "Access-Control-Allow-Origin": "*",
+      },
       body: JSON.stringify({
         password: userData.password,
         email: userData.email,
       }),
+      // 添加CORS模式
+      mode: "cors",
+      credentials: "same-origin",
     })
 
     if (response.ok) {
@@ -348,7 +391,14 @@ export const getUserHistory = async (username) => {
   try {
     const response = await fetch(`${API_BASE_URL}/user/${username}/history`, {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        // 添加CORS相关头部
+        "Access-Control-Allow-Origin": "*",
+      },
+      // 添加CORS模式
+      mode: "cors",
+      credentials: "same-origin",
     })
 
     if (response.ok) {
@@ -383,7 +433,14 @@ export const getHistoryDetail = async (historyId) => {
   try {
     const response = await fetch(`${API_BASE_URL}/history/${historyId}`, {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        // 添加CORS相关头部
+        "Access-Control-Allow-Origin": "*",
+      },
+      // 添加CORS模式
+      mode: "cors",
+      credentials: "same-origin",
     })
 
     if (response.ok) {
@@ -422,10 +479,17 @@ export const saveConversation = async (username, historyId, title, message) => {
     const encodedTitle = encodeURIComponent(title)
     const response = await fetch(`${API_BASE_URL}/user/${username}/history/${historyId}/${encodedTitle}`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        // 添加CORS相关头部
+        "Access-Control-Allow-Origin": "*",
+      },
       body: JSON.stringify({
         message: message,
       }),
+      // 添加CORS模式
+      mode: "cors",
+      credentials: "same-origin",
     })
 
     if (response.ok) {
@@ -461,7 +525,14 @@ export const deleteHistory = async (historyId) => {
   try {
     const response = await fetch(`${API_BASE_URL}/history/${historyId}`, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        // 添加CORS相关头部
+        "Access-Control-Allow-Origin": "*",
+      },
+      // 添加CORS模式
+      mode: "cors",
+      credentials: "same-origin",
     })
 
     if (response.ok) {

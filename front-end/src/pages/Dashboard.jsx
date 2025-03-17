@@ -20,7 +20,7 @@ function Dashboard() {
       setSelectedRole(user.role)
     }
   }, [user])
-  
+
   const handleSendMessage = (e) => {
     e.preventDefault()
     // Here you would handle sending the message
@@ -36,10 +36,15 @@ function Dashboard() {
   const handleLogout = async () => {
     try {
       await logout()
-      navigate("/")
+      navigate("/") // 登出后导航到首页
     } catch (err) {
       console.error("Logout error:", err)
     }
+  }
+
+  const handleProfileClick = () => {
+    navigate("/profile")
+    setShowProfileDropdown(false)
   }
 
   return (
@@ -133,7 +138,7 @@ function Dashboard() {
 
             {showProfileDropdown && (
               <div className="profile-dropdown-menu">
-                <div className="profile-dropdown-item">
+                <div className="profile-dropdown-item" onClick={handleProfileClick}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
